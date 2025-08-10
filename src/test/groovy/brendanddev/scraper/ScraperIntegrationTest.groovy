@@ -44,5 +44,23 @@ class ScraperIntegrationTest extends Specification {
         notThrown(Exception)
     }
 
+    // Tests scraping table data from a page
+    def "should scrape table data successfully"() {
+        when: "scraping table data from webscraper.io"
+        ScraperUtils.scrapeTableData()
+        
+        then: "should complete without error"
+        notThrown(Exception)
+    }
+
+    // Tests scraping form data from a page
+    def "should scrape form data successfully"() {
+        when: "scraping form data from httpbin"
+        ScraperUtils.scrapeWithFormData()
+        
+        then: "should complete without error"
+        notThrown(Exception)
+    }
+
 
 }
