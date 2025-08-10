@@ -9,6 +9,16 @@ class ScraperUtils {
     static final int DELAY_BETWEEN_REQUESTS = 1000
 
 
+    static void saveToFile(String content, String filePath) {
+    }
+
+
+    /**
+     * Fetches the robots.txt file for a given base URL.
+     * Prints the content of the robots.txt file if it exists.
+     *
+     * @param baseUrl The base URL of the website to check.
+     */
     static void checkRobotsTxt(String baseUrl) {
         try {
             String robotsUrl = "${baseUrl}/robots.txt"
@@ -27,6 +37,17 @@ class ScraperUtils {
         } catch (Exception e) {
             println "Could not fetch robots.txt: ${e.message}"
             println "Site may not have a robots.txt or it's inaccessible."
+        }
+    }
+
+    /**
+     * Pauses the execution for a delay between HTTP requests to avoid overwhelming the target server
+     */
+    static void respectfulDelay() {
+        try {
+            Thread.sleep(DELAY_BETWEEN_REQUESTS)
+        } catch (InterruptedException e) {
+            println "Delay interrupted: ${e.message}"
         }
     }
 
