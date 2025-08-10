@@ -9,9 +9,38 @@ class ScraperUtils {
     static final int DELAY_BETWEEN_REQUESTS = 1000
 
 
-    static void saveToFile(String content, String filePath) {
-    }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    /**
+     * Saves the given string content to a file at the specified path.
+     *
+     * @param content The text content to write to the file.
+     * @param filePath The path (including filename) where the content should be saved.
+     */
+    static void saveToFile(String content, String filePath) {
+        try {
+            new File(filePath).text = content
+            println "Content saved to ${filePath}"
+        } catch (IOException e) {
+            println "Error saving content to file: ${e.message}"
+        }
+    }
 
     /**
      * Fetches the robots.txt file for a given base URL.
