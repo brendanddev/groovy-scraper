@@ -17,6 +17,9 @@ class MainScraper {
         // Test checking robots.txt
         ScraperUtils.checkRobotsTxt("http://quotes.toscrape.com")
 
+        // Test scraping elements
+        ScraperUtils.scrapeElements("http://quotes.toscrape.com", ".quote")
+
         // Test scraping table data
         ScraperUtils.scrapeTableData()
 
