@@ -28,10 +28,31 @@ class ScraperTest extends Specification {
     }
 
     // Verifies the DELAY_BETWEEN_REQUESTS config constant is a positive integer
-    def "DELAY_BETWEEN_REQUESTS should be a positive integer"() {
+    def "test DELAY_BETWEEN_REQUESTS is a positive integer"() {
         expect:
         ScraperUtils.DELAY_BETWEEN_REQUESTS > 0
         ScraperUtils.DELAY_BETWEEN_REQUESTS >= 1000
+    }
+
+    // Tests the delay between requests to ensure it respects the configured delay
+    def "should implement respectful delay"() {
+        given: "start time"
+        long startTime = System.currentTimeMillis()
+        
+        when: "calling respectful delay"
+        ScraperUtils.respectfulDelay()
+        
+        then: "should take at least 1 second"
+        long endTime = System.currentTimeMillis()
+        (endTime - startTime) >= 1000
+    }
+
+    // Tests that timeout value is within reasonable bounds (1 - 30 seconds)
+    @Unroll
+    def "should validate timeout value is reasonable"() {
+        expect: "timeout should be within reasonable bounds"
+        ScraperUtils.TIMEOUT >= 1000
+        ScraperUtils.TIMEOUT <= 30000
     }
 
     // Tests that the saveToFile method writes the expected content to a file
@@ -82,6 +103,7 @@ class ScraperTest extends Specification {
         then: "should handle gracefully"
         notThrown(Exception)
     }
+
 
 
 
