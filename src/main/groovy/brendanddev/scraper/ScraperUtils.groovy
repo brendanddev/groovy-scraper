@@ -9,6 +9,7 @@ import groovy.json.JsonSlurper
 
 class ScraperUtils {
 
+    static final JsonSlurper jsonSlurper = new JsonSlurper()
     static final String USER_AGENT = "Mozilla/5.0"
     static final int TIMEOUT = 5000
     static final int DELAY_BETWEEN_REQUESTS = 1000
@@ -53,6 +54,34 @@ class ScraperUtils {
 
         } catch (Exception e) {
             println "Error during table scraping: ${e.message}"
+        }
+    }
+
+    /**
+     * Scrapes JSON data from the specified URL and prints it to the console.
+     *
+     * @param url The URL to fetch JSON data from. 
+     *            Defaults to "https://httpbin.org/json" if not provided.
+     */
+    static void scrapeJsonData(String url = "https://httpbin.org/json") {
+        try {
+            // Connect to the URL and fetch raw JSON content as a string
+            String jsonContent = Jsoup.connect(url)
+                .userAgent(USER_AGENT)
+                .timeout(TIMEOUT)
+                .ignoreContentType(true)
+                .execute()
+                .body()
+            
+            // Parse json content
+            def jsonData = jsonSlurper.parseText(jsonContent)
+
+            println "JSON Data from ${url}:"
+            jsonData.each { key, value ->
+                println "${key}: ${value}"
+            }
+        } catch (Exception e) {
+            println "Error during JSON scraping: ${e.message}"
         }
     }
 
