@@ -14,11 +14,11 @@ class MainScraper {
     static void main(String[] args) {
         println "Starting the scraper..."
 
-        // Test scraping quotes
-        ScraperUtils.scrapeQuotes()
-
         // Test checking robots.txt
         ScraperUtils.checkRobotsTxt("http://quotes.toscrape.com")
+
+        // Test scraping table data
+        ScraperUtils.scrapeTableData()
 
         // Test saving to file
         String sampleContent = "Hello from scraping!"
