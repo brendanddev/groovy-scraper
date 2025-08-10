@@ -16,6 +16,42 @@ class ScraperUtils {
 
 
     /**
+     * Scrapes elements from a web page based on the provided CSS selector.
+     *
+     * @param url The URL of the page to scrape.
+     * @param cssSelector The CSS selector to find elements.
+     * @param attribute Optional. If provided, prints the specified attribute value of each element.
+     *                  If not provided, prints the text content of each element.
+     */
+    static void scrapeElements(String url, String cssSelector, String attribute = null) {
+        try {
+            // Connect to the URL and fetch the HTML document
+            Document doc = Jsoup.connect(url)
+                .userAgent(USER_AGENT)
+                .timeout(TIMEOUT)
+                .get()
+            
+            // Select elements based on the provided CSS selector
+            Elements elements = doc.select(cssSelector)
+            if (elements.isEmpty()) {
+                println "No elements found for selector '${cssSelector}' at ${url}"
+                return
+            }
+            elements.each { Element element ->
+                if (attribute) {
+                    println element.attr(attribute)
+                } else {
+                    println element.text()
+                }
+            }
+            // Add delay after scraping
+            respectfulDelay()
+        } catch (Exception e) {
+            println "Error during scraping: ${e.message}"
+        }
+    }
+
+    /**
      * Scrapes the first HTML table from the specified URL and prints its headers and row data.
      * 
      * param url The URL of the web page containing the table to scrape.
