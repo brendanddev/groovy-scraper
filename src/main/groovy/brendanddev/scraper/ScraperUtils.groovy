@@ -21,7 +21,7 @@ class ScraperUtils {
      * param url The URL of the web page containing the table to scrape.
      *           Defaults to "https://webscraper.io/test-sites/tables" if not provided.
      */
-    static void scrapeTableData(String url = "https://webscraper.io/test-sites/tables") {
+    static void scrapeTableData(String url = ":https//webscraper.io/test-sites/tables") {
         println "Starting table scrape for URL: ${url}"
         try {
             // Connect to the URL and fetch the HTML document
@@ -86,6 +86,39 @@ class ScraperUtils {
     }
 
     /**
+     * Scrapes form metadata from the specified URL and prints form details.
+     *
+     * @param url The URL of the web page containing the form to scrape.
+     *            Defaults to "https://httpbin.org/forms/post" if not provided.
+     */
+    static void scrapeWithFormData(String url = "https://httpbin.org/forms/post") {
+        try {
+            // Connect to the URL and fetch the HTML document
+            Document doc = Jsoup.connect(url)
+                .userAgent(USER_AGENT)
+                .timeout(TIMEOUT)
+                .get()
+
+            // Extract form info
+            Elements forms = doc.select("form")
+
+            // Print form details
+            forms.each { form ->
+                println "Form action: ${form.attr('action')}"
+                println "Form method: ${form.attr('method')}"
+                
+                Elements inputs = form.select("input, textarea, select")
+                inputs.each { input ->
+                    println "Input: ${input.attr('name')} (type: ${input.attr('type')})"
+                }
+                println "-" * 30
+            }
+        } catch (Exception e) {
+            println "Error during form data scraping: ${e.message}"
+        }
+    }
+
+    /**
      * Scrapes quotes from the website 'http://quotes.toscrape.com/'.
      *
      * This method connects to the site, parses the HTML to find the quote blocks,
@@ -120,8 +153,6 @@ class ScraperUtils {
             println "Error during scraping: ${e.message}"
         }
     }
-
-
 
 
     /**
