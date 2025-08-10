@@ -2,6 +2,10 @@ package brendanddev.scraper
 
 import spock.lang.Specification
 
+/**
+ * Defines the integration tests for the ScraperUtils class to validate and test 
+ * methods that perform actual HTTP requests and interactions with web pages.
+ */
 class ScraperIntegrationTest extends Specification {
 
     // Tests the checkRobotsTxt method to ensure it can fetch and print robots.txt content
@@ -22,6 +26,23 @@ class ScraperIntegrationTest extends Specification {
         notThrown(Exception)
     }
 
+    // Tests scraping elements from a page
+    def "should scrape elements successfully"() {
+        when: "scraping elements from quotes.toscrape.com"
+        ScraperUtils.scrapeElements("http://quotes.toscrape.com", ".quote")
+        
+        then: "should complete without error"
+        notThrown(Exception)
+    }
+
+    // Tests scraping json elements from a page
+    def "should scrape JSON data successfully"() {
+        when: "scraping JSON from httpbin"
+        ScraperUtils.scrapeJsonData()
+        
+        then: "should complete without error"
+        notThrown(Exception)
+    }
 
 
 }
