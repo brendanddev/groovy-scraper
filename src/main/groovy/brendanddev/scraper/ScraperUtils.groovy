@@ -13,6 +13,49 @@ class ScraperUtils {
     static final int TIMEOUT = 5000
     static final int DELAY_BETWEEN_REQUESTS = 1000
 
+
+    /**
+     * Scrapes the first HTML table from the specified URL and prints its headers and row data.
+     * 
+     * param url The URL of the web page containing the table to scrape.
+     *           Defaults to "https://webscraper.io/test-sites/tables" if not provided.
+     */
+    static void scrapeTableData(String url = "https://webscraper.io/test-sites/tables") {
+        println "Starting table scrape for URL: ${url}"
+        try {
+            // Connect to the URL and fetch the HTML document
+            Document doc = Jsoup.connect(url)
+                .userAgent(USER_AGENT)
+                .timeout(TIMEOUT)
+                .get()
+            
+            // Select the first table element
+            Element table = doc.select("table").first()
+            if (!table) {
+                println "No table found at ${url}"
+                return
+            }
+
+            // Extract table headers as list of strings
+            List<String> headers = table.select("thead tr th").collect { it.text() }
+            println "Table Headers: ${headers.join(', ')}"
+
+            // Extract rows and print cell data
+            Elements rows = table.select("tbody tr")
+            rows.each { Element row ->
+                List<String> cellData = row.select("td").collect { it.text() }
+                println "Row Data: ${cellData.join(', ')}"
+            }
+
+            // Add delay after scraping
+            respectfulDelay()
+            println "-" * 60 
+
+        } catch (Exception e) {
+            println "Error during table scraping: ${e.message}"
+        }
+    }
+
     /**
      * Scrapes quotes from the website 'http://quotes.toscrape.com/'.
      *
@@ -48,6 +91,8 @@ class ScraperUtils {
             println "Error during scraping: ${e.message}"
         }
     }
+
+
 
 
     /**
