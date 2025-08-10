@@ -20,3 +20,6 @@ mvnw.cmd
 
 # Groovy compiled classes
 **/*.class
+
+# Save to file data
+output.txt
