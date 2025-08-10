@@ -9,3 +9,14 @@
 .DS_Store
 Thumbs.db
 
+# Maven Wrapper files/folder
+.mvn/
+mvnw
+mvnw.cmd
+
+# Temporary files
+*.tmp
+*.bak
+
+# Groovy compiled classes
+**/*.class
