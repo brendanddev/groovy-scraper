@@ -1,26 +1,14 @@
 package brendanddev.scraper
 
-import groovy.cli.picocli.CliBuilder
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+
 
 
 class MainScraper {
 
     static void main(String[] args) {
 
-        // Create the cli parser
-        def cli = new CliBuilder(usage: 'groovy MainScraper.groovy [options]')
-
-        // Define command line options
-        cli.h(longOpt: 'help', 'Show this help message')
-        cli.a(longOpt: 'all', 'Run all scraping examples (default)')
-        cli.t(longOpt: 'tables', 'Scrape table data only')
-        cli.j(longOpt: 'json', 'Scrape JSON data only')
-        cli.f(longOpt: 'forms', 'Scrape form data only')
-        cli.r(longOpt: 'robots', 'Check robots.txt only')
-        cli.o(longOpt: 'output', args: 1, argName: 'file', 'Output file for results')
-        cli.v(longOpt: 'verbose', 'Verbose output')
+        // Create the CLI parser
+        def cli = CliUtils.createCliParser()
 
         // Parse the command line arguments into options
         def options = cli.parse(args)
@@ -36,10 +24,10 @@ class MainScraper {
         String outputFile = options.o ?: null
 
         // Print application banner
-        printBanner()
+        CliUtils.printBanner()
 
         if (verbose) {
-            println "Starting scraper at ${getCurrentTimestamp()}"
+            println "Starting scraper at ${CliUtils.getCurrentTimestamp()}"
             println "Verbose mode: ON"
             if (outputFile) println "Output file: ${outputFile}"
         }
@@ -78,20 +66,6 @@ class MainScraper {
             println "Scraping session completed at ${getCurrentTimestamp()}"
             println "Remember: Always scrape responsibly!"
         }
-    }
-
-    /**
-     * Prints application banner
-     */
-    static void printBanner() {
-        println """
-        ╔══════════════════════════════════════════════════════════════╗
-        ║                           Web Scraper                        ║
-        ╠══════════════════════════════════════════════════════════════╣                    
-        ║                    by brendanddev                            ║
-        ╠══════════════════════════════════════════════════════════════╣
-        ╚══════════════════════════════════════════════════════════════╝
-        """
     }
 
     /**
@@ -152,13 +126,7 @@ class MainScraper {
 
         """.trim()
     }
-    
-    /**
-     * Get current timestamp
-     */
-    static String getCurrentTimestamp() {
-        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-    }
+
 
 
 }
