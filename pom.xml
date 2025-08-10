@@ -3,17 +3,20 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
          https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
+    <!-- Project coordinates -->
     <modelVersion>4.0.0</modelVersion>
     <groupId>brendanddev.scraper</groupId>
     <artifactId>groovy-scraper</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <!-- Properties to centralize version numbers and Java compatibility -->
     <properties>
         <groovy.version>4.0.21</groovy.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
+    <!-- Project Dependencies -->
     <dependencies>
         <dependency>
             <groupId>org.apache.groovy</groupId>
@@ -33,7 +36,7 @@
             <version>1.17.2</version>
         </dependency>
 
-        <!-- Logging (optional) -->
+        <!-- Logging -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
