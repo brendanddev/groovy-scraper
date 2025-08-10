@@ -23,6 +23,9 @@ class MainScraper {
         // Test scraping JSON data
         ScraperUtils.scrapeJsonData()
 
+        // Test scraping form data
+        ScraperUtils.scrapeWithFormData()
+
         // Test saving to file
         String sampleContent = "Hello from scraping!"
         ScraperUtils.saveToFile(sampleContent, "output.txt")
