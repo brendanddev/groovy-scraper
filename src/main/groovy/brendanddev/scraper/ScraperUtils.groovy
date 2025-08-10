@@ -9,10 +9,21 @@ import groovy.json.JsonSlurper
 
 class ScraperUtils {
 
+    // Load configuration properties
+    static final Properties config = new Properties()
+    static {
+        File propFile = new File("src/main/resources/config.properties")
+        if (propFile.exists()) {
+            propFile.withInputStream { stream -> config.load(stream) }
+        } else {
+            println "Warning: config.properties not found. Using default values."
+        }
+    }
+
     static final JsonSlurper jsonSlurper = new JsonSlurper()
-    static final String USER_AGENT = "Mozilla/5.0"
-    static final int TIMEOUT = 5000
-    static final int DELAY_BETWEEN_REQUESTS = 1000
+    static final String USER_AGENT = config.getProperty("user.agent", "Mozilla/5.0")
+    static final int TIMEOUT = config.getProperty("timeout", "5000").toInteger()
+    static final int DELAY_BETWEEN_REQUESTS = config.getProperty("delay.between.requests", "1000").toInteger()
 
 
     /**
@@ -54,10 +65,10 @@ class ScraperUtils {
     /**
      * Scrapes the first HTML table from the specified URL and prints its headers and row data.
      * 
-     * param url The URL of the web page containing the table to scrape.
+     * @param url The URL of the web page containing the table to scrape.
      *           Defaults to "https://webscraper.io/test-sites/tables" if not provided.
      */
-    static void scrapeTableData(String url = ":https//webscraper.io/test-sites/tables") {
+    static void scrapeTableData(String url = config.getProperty("default.table.url", "https://webscraper.io/test-sites/tables")) {        
         println "Starting table scrape for URL: ${url}"
         try {
             // Connect to the URL and fetch the HTML document
@@ -99,7 +110,7 @@ class ScraperUtils {
      * @param url The URL to fetch JSON data from. 
      *            Defaults to "https://httpbin.org/json" if not provided.
      */
-    static void scrapeJsonData(String url = "https://httpbin.org/json") {
+    static void scrapeJsonData(String url = config.getProperty("default.json.url", "https://httpbin.org/json")) {
         try {
             // Connect to the URL and fetch raw JSON content as a string
             String jsonContent = Jsoup.connect(url)
@@ -127,7 +138,7 @@ class ScraperUtils {
      * @param url The URL of the web page containing the form to scrape.
      *            Defaults to "https://httpbin.org/forms/post" if not provided.
      */
-    static void scrapeWithFormData(String url = "https://httpbin.org/forms/post") {
+    static void scrapeWithFormData(String url = config.getProperty("default.form.url", "https://httpbin.org/forms/post")) {
         try {
             // Connect to the URL and fetch the HTML document
             Document doc = Jsoup.connect(url)
