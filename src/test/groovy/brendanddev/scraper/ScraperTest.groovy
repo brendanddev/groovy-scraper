@@ -11,11 +11,13 @@ import spock.lang.Unroll
 class ScraperTest extends Specification {
 
     // Verifies the USER_AGENT config constant is set and not empty
+    // and is not a bot user agent
     @Unroll
-    def "test USER_AGENT is not empty"() {
-        expect:
-        ScraperUtils.USER_AGENT?.trim()
+        def "should have proper user agent string"() {
+        expect: "user agent should be identifiable"
+        ScraperUtils.USER_AGENT != null
         ScraperUtils.USER_AGENT.length() > 0
+        !ScraperUtils.USER_AGENT.contains("bot")
     }
 
     // Verifies the TIMEOUT config constant is a positive integer
@@ -63,6 +65,23 @@ class ScraperTest extends Specification {
         notThrown(Exception)
     }
 
+    // Tests the checkRobotsTxt method to ensure it can fetch and print robots.txt content
+    def "should successfully check robots.txt"() {
+        when: "checking robots.txt for educational site"
+        ScraperUtils.checkRobotsTxt("http://quotes.toscrape.com")
+        
+        then: "should complete without throwing exception"
+        notThrown(Exception)
+    }
+
+    // Tests the checkRobotsTxt method for a site without robots.txt
+    def "should handle non-existent robots.txt gracefully"() {
+        when: "checking robots.txt for site without one"
+        ScraperUtils.checkRobotsTxt("https://httpbin.org")
+        
+        then: "should handle gracefully"
+        notThrown(Exception)
+    }
 
 
 
