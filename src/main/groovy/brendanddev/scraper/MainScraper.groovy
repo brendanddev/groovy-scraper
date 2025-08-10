@@ -1,39 +1,34 @@
 package brendanddev.scraper
 
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
-import org.jsoup.nodes.Element
-import org.jsoup.select.Elements
-import groovy.json.JsonOutput
-import groovy.json.JsonSlurper
+import groovy.cli.picocli.CliBuilder
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 class MainScraper {
 
 
-    static void main(String[] args) {
-        println "Starting the scraper..."
 
-        // Test checking robots.txt
-        ScraperUtils.checkRobotsTxt("http://quotes.toscrape.com")
-
-        // Test scraping elements
-        ScraperUtils.scrapeElements("http://quotes.toscrape.com", ".quote")
-
-        // Test scraping table data
-        ScraperUtils.scrapeTableData()
-
-        // Test scraping JSON data
-        ScraperUtils.scrapeJsonData()
-
-        // Test scraping form data
-        ScraperUtils.scrapeWithFormData()
-
-        // Test saving to file
-        String sampleContent = "Hello from scraping!"
-        ScraperUtils.saveToFile(sampleContent, "output.txt")
-
-        println "Scraping tests completed."
+    /**
+     * Prints application banner
+     */
+    static void printBanner() {
+        println """
+        ╔══════════════════════════════════════════════════════════════╗
+        ║                           Web Scraper                        ║
+        ╠══════════════════════════════════════════════════════════════╣                    
+        ║                    by brendanddev                            ║
+        ╠══════════════════════════════════════════════════════════════╣
+        ╚══════════════════════════════════════════════════════════════╝
+        """
     }
+    
+    /**
+     * Get current timestamp
+     */
+    static String getCurrentTimestamp() {
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+    }
+
 
 }
