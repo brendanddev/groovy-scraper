@@ -12,7 +12,7 @@ class MainScraper {
 
     static void main(String[] args) {
         try {
-            CliUtils.runInteractiveMode()
+            CliUtils.runScraperMenu()
 
         } catch (Exception e) {
             System.err.println "Fatal error: ${e.message}"
@@ -24,39 +24,11 @@ class MainScraper {
     }
 
     /**
-     * Performs a custom web scraping operation using the provided URL and CSS selector.
-     */
-    static void runCustomScraping(String url, String selector, Integer limit, String outputFile, String format, boolean verbose) {
-        if (verbose) println "\nCustom scraping: $selector from $url"
-        
-        if (!CliUtils.isValidUrl(url)) {
-            println "Error: Invalid URL format"
-            return
-        }
-
-        List<String> results = ScraperUtils.scrapeElementsToList(url, selector, limit)
-        
-        if (results.isEmpty()) {
-            println "No results found for selector '$selector'"
-            return
-        }
-
-        // Display results
-        CliUtils.displayResults(results)
-
-        // Save to file if requested
-        if (outputFile) {
-            CliUtils.saveResults(results, outputFile, format, url, selector)
-        }
-    }
-
-    /**
      * Runs all built-in examples
      */
     static void runAllExamples(boolean verbose) {
         println "\nRunning all scraping examples..."
         runRobotsCheck(verbose)
-        runQuotesScraper(verbose)
         runTableScraper(verbose)
         runJsonScraper(verbose)
         runFormScraper(verbose)
