@@ -79,6 +79,7 @@ class CliUtils {
     static void runInteractiveMode() {
         Scanner scanner = new Scanner(System.in)
 
+        printBanner()
         println "\nWelcome to Interactive Scraping Mode!"
         println "This will guide you through scraping any website."
         println "=" * 50
@@ -95,21 +96,63 @@ class CliUtils {
 
             // Check robots.txt 
             String baseUrl = extractBaseUrl(url)
-            println "\n[Simulated] Checking robots.txt for $baseUrl ..."
+            println "\nChecking robots.txt for $baseUrl ..."
+            ScraperUtils.checkRobotsTxt(baseUrl)
 
             // Ask for a CSS selector
+            println "\nCommon selectors:"
+            println "  h1, h2, h3        - Headers"
+            println "  .class-name       - Elements with a class"
+            println "  #element-id       - Element with specific ID"
+            println "  a                 - All links"
+            println "  p                 - All paragraphs"
+            
             print "\nEnter a CSS selector (e.g., h1, .class, #id): "
             String selector = scanner.nextLine().trim()
 
+            if (selector.isEmpty()) {
+                println "No selector provided. Exiting interactive mode."
+                return
+            }
+
+            // Ask for limit
+            print "\nLimit results (press Enter for no limit): "
+            String limitStr = scanner.nextLine().trim()
+            Integer limit = limitStr.isEmpty() ? null : limitStr.toInteger()
+
             // Run scraping
-            println "\n[Simulated] Scraping '$selector' from $url ..."
-            println "Done!"
+            println "\nScraping '$selector' from $url ..."
+            List<String> results = ScraperUtils.scrapeElementsToList(url, selector, limit)
+            
+            if (results.isEmpty()) {
+                println "No results found for selector '$selector'"
+            } else {
+                displayResults(results)
+                
+                // Ask if user wants to save results
+                print "\nSave results to file? (y/n): "
+                String saveResponse = scanner.nextLine().trim().toLowerCase()
+                
+                if (saveResponse.startsWith('y')) {
+                    print "Enter filename: "
+                    String filename = scanner.nextLine().trim()
+                    
+                    if (!filename.isEmpty()) {
+                        print "Choose format (text/json/csv) [text]: "
+                        String format = scanner.nextLine().trim()
+                        format = format.isEmpty() ? 'text' : format
+                        
+                        saveResults(results, filename, format, url, selector)
+                    }
+                }
+            }
         } catch (Exception e) {
             println "Error in interactive mode: ${e.message}"
         } finally {
             scanner.close()
         }
     }
+    
     
     /**
      * Prints the application banner to be shown at startup
@@ -131,6 +174,22 @@ class CliUtils {
     static String getCurrentTimestamp() {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
     }
+
+
+    /** Displays a list of 10 scraping results in the console */
+    private static void displayResults(List<String> results) {
+        println "\nFound ${results.size()} result(s):"
+        println "-" * 50
+        
+        results.eachWithIndex { result, index ->
+            println "${index + 1}: ${result}"
+            if (index >= 9 && results.size() > 10) {
+                println "... and ${results.size() - 10} more results"
+                return
+            }
+        }
+    }
+
     
     /**
      * Saves the scraping results to a file in the specified format
