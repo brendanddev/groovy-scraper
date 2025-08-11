@@ -1,6 +1,13 @@
 package brendanddev.scraper
 
 
+/**
+ * Main entry point to the web scraper cli application
+ *
+ * This class handles parsing command line arguments, handling user input and options,
+ * dispatching to the appropriate scraping functions including interactive mode, built-in
+ * scraping examples, and custom scraping based on user-provided URLs and CSS selectors.
+ */
 class MainScraper {
 
     static void main(String[] args) {
@@ -14,6 +21,12 @@ class MainScraper {
         // If no options provided,
         if (!options || options.h) {
             cli.usage()
+            return
+        }
+
+        // Check for interactive mode
+        if (options.i) {
+            CliUtils.runInteractiveMode()
             return
         }
 
@@ -61,7 +74,7 @@ class MainScraper {
             }
         } finally {
             println "\n" + "=" * 60
-            println "Scraping session completed at ${getCurrentTimestamp()}"
+            println "Scraping session completed at ${CliUtils.getCurrentTimestamp()}"
             println "Remember: Always scrape responsibly!"
         }
     }
@@ -111,7 +124,7 @@ class MainScraper {
         return """
             Web Scraping Session Summary
             ============================
-            Timestamp: ${getCurrentTimestamp()}
+            Timestamp: ${CliUtils.getCurrentTimestamp()}
             Tools Used: Groovy + JSoup
             Targets: Educational websites only
 
