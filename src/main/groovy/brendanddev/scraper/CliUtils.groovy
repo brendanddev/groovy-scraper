@@ -28,13 +28,13 @@ class CliUtils {
         // Custom scraping options
         cli.u(longOpt: 'url', args: 1, argName: 'URL', 'Custom URL to scrape')
         cli.s(longOpt: 'selector', args: 1, argName: 'CSS_SELECTOR', 'CSS selector for custom scraping (use with --url)')
-        cli.a(longOpt: 'attribute', args: 1, argName: 'ATTRIBUTE', 'Extract specific attribute instead of text (optional)')
+        // cli.a(longOpt: 'attribute', args: 1, argName: 'ATTRIBUTE', 'Extract specific attribute instead of text (optional)')
         cli.i(longOpt: 'interactive', 'Start interactive mode for guided scraping')
         cli.l(longOpt: 'list-examples', 'Show CSS selector examples and exit')
 
         // Output and formatting options
         cli.o(longOpt: 'output', args: 1, argName: 'file', 'Output file for results')
-        cli.f(longOpt: 'format', args: 1, argName: 'FORMAT', 'Output format: text, json, csv (default: text)')
+        // cli.f(longOpt: 'format', args: 1, argName: 'FORMAT', 'Output format: text, json, csv (default: text)')
         cli.v(longOpt: 'verbose', 'Verbose output')
         cli.m(longOpt: 'limit', args: 1, argName: 'N', 'Limit results to N items')
 
@@ -66,6 +66,44 @@ class CliUtils {
         } catch (Exception e) {
             println "Error extracting base URL: ${e.message}"
             return url
+        }
+    }
+    
+    /**
+     * Controls the interactive mode for the scraper
+     */
+    static void runInteractiveMode() {
+        Scanner scanner = new Scanner(System.in)
+
+        println "\nWelcome to Interactive Scraping Mode!"
+        println "This will guide you through scraping any website."
+        println "=" * 50
+
+        try {
+            // Get URL
+            print "\nEnter the website URL to scrape: "
+            String url = scanner.nextLine().trim()
+
+            if (!isValidUrl(url)) {
+                println "Invalid URL format. Please include http:// or https://"
+                return
+            }
+
+            // Check robots.txt 
+            String baseUrl = extractBaseUrl(url)
+            println "\n[Simulated] Checking robots.txt for $baseUrl ..."
+
+            // Ask for a CSS selector
+            print "\nEnter a CSS selector (e.g., h1, .class, #id): "
+            String selector = scanner.nextLine().trim()
+
+            // Run scraping
+            println "\n[Simulated] Scraping '$selector' from $url ..."
+            println "Done!"
+        } catch (Exception e) {
+            println "Error in interactive mode: ${e.message}"
+        } finally {
+            scanner.close()
         }
     }
 
