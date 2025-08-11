@@ -9,18 +9,20 @@ class CliBanner {
      * Prints the rainbow banner
      */
     static void printBanner() {
-        String banner = """
-            ╔══════════════════════════════════════════════════════════════╗
-            ║                           Web Scraper                        ║
-            ╠══════════════════════════════════════════════════════════════╣                    
-            ║                    by brendanddev                            ║
-            ╚══════════════════════════════════════════════════════════════╝
-        """.stripIndent()
+        int contentWidth = 62  // width inside the borders
 
-        println(banner)
+        println TerminalStyles.CYAN + "╔" + "═".repeat(contentWidth) + "╗" + TerminalStyles.RESET
+        println TerminalStyles.CYAN + "║" + TerminalStyles.BOLD + TerminalStyles.center("Web Scraper", contentWidth) + TerminalStyles.RESET + TerminalStyles.CYAN + "║" + TerminalStyles.RESET
+        println TerminalStyles.CYAN + "╠" + "═".repeat(contentWidth) + "╣" + TerminalStyles.RESET
+        println TerminalStyles.CYAN + "║" + TerminalStyles.center("by brendanddev", contentWidth) + "║" + TerminalStyles.RESET
+        println TerminalStyles.CYAN + "╚" + "═".repeat(contentWidth) + "╝" + TerminalStyles.RESET
         println()
-        println(TerminalStyles.info("Welcome to the Terminal Web Scraper!"))
-        println(TerminalStyles.dim("This tool allows you to scrape data from any website using CSS selectors."))
-        println(TerminalStyles.CYAN + "--------------------------------------------------" + TerminalStyles.RESET)
+        println TerminalStyles.info("Welcome to the Terminal Web Scraper!")
+        println TerminalStyles.error("TEST ERROR MESSAGE")
+        println TerminalStyles.success("TEST SUCCESS MESSAGE")
+        println TerminalStyles.warn("TEST WARNING MESSAGE")
+        println TerminalStyles.dim("This tool allows you to scrape data from any website using CSS selectors.")
+        println TerminalStyles.WHITE + "--------------------------------------------------" + TerminalStyles.RESET
     }
+
 }
