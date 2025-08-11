@@ -18,11 +18,8 @@ class CliMenu {
     static void runScraperMenu() {
         Scanner scanner = new Scanner(System.in)
         CliBanner.printBanner()
-        println "\nWelcome to the Terminal Web Scraper!"
-        println "This tool allows you to scrape data from any website using CSS selectors."
 
         while (true) {
-            println "-" * 50
             println "1) Custom Scraping"
             println "2) Run Built-in Examples"
             println "3) Help & Usage"

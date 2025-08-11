@@ -35,10 +35,11 @@ class TerminalStyles {
     ]
 
     // Common symbols with colors
-    static String success(String msg) { return "${GREEN}✅${RESET} ${msg}" }
-    static String error(String msg)   { return "${RED}❌${RESET} ${msg}" }
-    static String info(String msg)    { return "${CYAN}ℹ️${RESET} ${msg}" }
-    static String warn(String msg)    { return "${YELLOW}⚠️${RESET} ${msg}" }
+    static String success(String msg) { return "${GREEN}[✔]${RESET} ${msg}" }
+    static String error(String msg)   { return "${RED}[✖]${RESET} ${msg}" }
+    static String info(String msg)    { return "${CYAN}[i]${RESET} ${msg}" }
+    static String warn(String msg)    { return "${YELLOW}[!]${RESET} ${msg}" }
+    static String dim(String msg)     { return "${DIM}${msg}${RESET}" }
 
     // Center text in given width
     static String center(String text, int width) {
