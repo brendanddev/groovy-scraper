@@ -21,11 +21,16 @@ It is designed for learning, experimentation, and as a starting point for buildi
 
 ## Requirements
 
+- Java 11 or later
+- Groovy 3.x
+- Internet connection to run scraping tasks
 
 ---
 
 ## Libraries
 
+- [JSoup](https://jsoup.org/) — for parsing and extracting data from HTML
+- Groovy standard libraries — for scripting and CLI utilities
 
 ---
 
