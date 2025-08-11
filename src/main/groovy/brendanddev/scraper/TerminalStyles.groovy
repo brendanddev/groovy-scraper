@@ -34,5 +34,27 @@ class TerminalStyles {
         "\u001B[38;5;201m"  // Pink
     ]
 
+    // Common symbols with colors
+    static String success(String msg) { return "${GREEN}✅${RESET} ${msg}" }
+    static String error(String msg)   { return "${RED}❌${RESET} ${msg}" }
+    static String info(String msg)    { return "${CYAN}ℹ️${RESET} ${msg}" }
+    static String warn(String msg)    { return "${YELLOW}⚠️${RESET} ${msg}" }
+
+    // Center text in given width
+    static String center(String text, int width) {
+        int padding = Math.max(0, (width - text.length()) / 2)
+        return " ".repeat(padding) + text
+    }
+
+    // Rainbow text effect
+    static String rainbow(String text) {
+        StringBuilder sb = new StringBuilder()
+        for (int i = 0; i < text.length(); i++) {
+            sb.append(RAINBOW[i % RAINBOW.size()])
+              .append(text.charAt(i))
+        }
+        sb.append(RESET)
+        return sb.toString()
+    }
 
 }
