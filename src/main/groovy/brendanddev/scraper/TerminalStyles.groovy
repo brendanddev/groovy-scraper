@@ -35,16 +35,18 @@ class TerminalStyles {
     ]
 
     // Common symbols with colors
-    static String success(String msg) { return "${GREEN}[✔]${RESET} ${msg}" }
-    static String error(String msg)   { return "${RED}[✖]${RESET} ${msg}" }
-    static String info(String msg)    { return "${CYAN}[i]${RESET} ${msg}" }
-    static String warn(String msg)    { return "${YELLOW}[!]${RESET} ${msg}" }
+    static String success(String msg) { return "${BOLD}${GREEN}[✔]${RESET} ${GREEN}${msg}${RESET}" }
+    static String error(String msg)   { return "${BOLD}${RED}[✖]${RESET} ${RED}${msg}${RESET}" }
+    static String info(String msg)    { return "${BOLD}${WHITE}[i]${RESET} ${BOLD}${msg} ${RESET}" }
+    static String warn(String msg)    { return "${BOLD}${YELLOW}[!]${RESET} ${YELLOW}${msg}${RESET}" }
     static String dim(String msg)     { return "${DIM}${msg}${RESET}" }
 
     // Center text in given width
     static String center(String text, int width) {
-        int padding = Math.max(0, (width - text.length()) / 2)
-        return " ".repeat(padding) + text
+        int paddingTotal = Math.max(0, width - text.length())
+        int paddingLeft = paddingTotal / 2
+        int paddingRight = paddingTotal - paddingLeft
+        return " ".repeat(paddingLeft) + text + " ".repeat(paddingRight)
     }
 
     // Rainbow text effect
