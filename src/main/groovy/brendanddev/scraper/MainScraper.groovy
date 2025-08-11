@@ -12,14 +12,14 @@ class MainScraper {
 
     static void main(String[] args) {
         try {
-            CliUtils.runScraperMenu()
+            CliMenu.runScraperMenu()
 
         } catch (Exception e) {
             System.err.println "Fatal error: ${e.message}"
             e.printStackTrace()
         } finally {
             println "\n" + "=" * 60
-            println "Scraping session completed at ${CliUtils.getCurrentTimestamp()}"
+            println "Scraping session completed at ${OutputFormatter.getCurrentTimestamp()}"
         }
     }
 
@@ -30,7 +30,7 @@ class MainScraper {
         return """
             Web Scraping Session Summary
             ============================
-            Timestamp: ${CliUtils.getCurrentTimestamp()}
+            Timestamp: ${OutputFormatter.getCurrentTimestamp()}
             Tools Used: Groovy + JSoup
         """.trim()
     }

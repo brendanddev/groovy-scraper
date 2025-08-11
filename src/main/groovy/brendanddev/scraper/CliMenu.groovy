@@ -17,7 +17,7 @@ class CliMenu {
      */
     static void runScraperMenu() {
         Scanner scanner = new Scanner(System.in)
-        printBanner()
+        CliBanner.printBanner()
         println "\nWelcome to the Terminal Web Scraper!"
         println "This tool allows you to scrape data from any website using CSS selectors."
 
@@ -63,13 +63,13 @@ class CliMenu {
             print "\nEnter the website URL to scrape: "
             String url = scanner.nextLine().trim()
 
-            if (!isValidUrl(url)) {
+            if (!UrlUtils.isValidUrl(url)) {
                 println "Invalid URL format. Please include http:// or https://"
                 return
             }
 
             // Check robots.txt
-            String baseUrl = extractBaseUrl(url)
+            String baseUrl = UrlUtils.extractBaseUrl(url)
             println "\nChecking robots.txt for $baseUrl ..."
             ScraperUtils.checkRobotsTxt(baseUrl)
 
@@ -100,7 +100,7 @@ class CliMenu {
             if (results.isEmpty()) {
                 println "No results found for selector '$selector'"
             } else {
-                displayResults(results)
+                OutputFormatter.displayResults(results)
 
                 // Ask to save results
                 print "\nSave results to file? (y/n): "
@@ -115,7 +115,7 @@ class CliMenu {
                         print "Choose format (text/json/csv) [text]: "
                         String format = scanner.nextLine().trim()
                         format = format.isEmpty() ? 'text' : format
-                        saveResults(results, filename, format, url, selector)
+                        OutputFormatter.saveResults(results, filename, format, url, selector)
                     }
                 }
             }
