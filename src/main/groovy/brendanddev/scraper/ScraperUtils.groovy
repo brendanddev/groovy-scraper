@@ -165,6 +165,48 @@ class ScraperUtils {
         }
     }
 
+
+    /**
+     * Scrapes elements from a web page based on the provided CSS selector and returns as a list
+     */
+    static List<String> scrapeElementsToList(String url, String cssSelector, Integer limit = -1, String attribute = null) {
+        List<String> results = []
+        try {
+            // Connect to the URL and fetch the HTML document
+            Document doc = Jsoup.connect(url)
+                .userAgent(USER_AGENT)
+                .timeout(TIMEOUT)
+                .get()
+            
+            // Select elements based on the provided CSS selector
+            Elements elements = doc.select(cssSelector)
+            
+            if (elements.isEmpty()) {
+                println "No elements found for selector '${cssSelector}' at ${url}"
+                return results
+            }
+
+            int count = 0
+            for (Element element : elements) {
+                if (limit && count >= limit) break
+                
+                String value = attribute ? element.attr(attribute) : element.text()
+                if (value.trim()) {  // Only add non-empty results
+                    results.add(value.trim())
+                    count++
+                }
+            }
+            
+            // Add delay after scraping
+            respectfulDelay()
+            
+        } catch (Exception e) {
+            println "Error during scraping: ${e.message}"
+        }
+        return results
+    }
+
+
     /**
      * Saves the given string content to a file at the specified path.
      *
