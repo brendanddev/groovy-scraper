@@ -1,8 +1,6 @@
 package brendanddev.scraper
 
 
-
-
 class MainScraper {
 
     static void main(String[] args) {
