@@ -11,83 +11,12 @@ package brendanddev.scraper
 class MainScraper {
 
     static void main(String[] args) {
-
-        // Create the CLI parser
-        def cli = CliUtils.createCliParser()
-
-        // Parse the command line arguments into options
-        def options = cli.parse(args)
-
-        // If no options provided or help requested
-        if (!options || options.h) {
-            cli.usage()
-            ScraperExamples.printUsageExamples()
-            return
-        }
-
-        // Check for examples list
-        if (options.l) {
-            printCssSelectorExamples()
-            return
-        }
-
-        // Check for interactive mode
-        if (options.i) {
-            CliUtils.runInteractiveMode()
-            return
-        }
-
-        // Initialize logging
-        boolean verbose = options.v
-        String outputFile = options.o ?: null
-        String format = options.format ?: 'text'
-
-        // Print application banner
-        CliUtils.printBanner()
-
-        if (verbose) {
-            println "Starting scraper at ${CliUtils.getCurrentTimestamp()}"
-            println "Verbose mode: ON"
-            if (outputFile) println "Output file: ${outputFile}"
-        }
-
         try {
-            // Handle custom URL scraping
-            if (options.u) {
-                if (!options.s) {
-                    println "Error: --selector is required when using --url"
-                    return
-                }
-                runCustomScraping(options.u, options.s, options.m?.toInteger(), outputFile, format, verbose)
-                return
-            }
-
-            // Determine what to run based on options
-            if (options.q) {
-                runQuotesScraper(verbose)
-            } else if (options.r) {
-                runRobotsCheck(verbose)
-            } else if (options.t) {
-                runTableScraper(verbose)
-            } else if (options.j) {
-                runJsonScraper(verbose)
-            } else if (options.f) {
-                runFormScraper(verbose)
-            } else if (options.a || (!options.r && !options.t && !options.j && !options.f && !options.q)) {
-                runAllExamples(verbose)
-            }
-
-            // Save output if requested
-            if (outputFile && !options.u) {
-                String summary = generateSummary()
-                ScraperUtils.saveToFile(summary, outputFile)
-            }
+            CliUtils.runInteractiveMode()
 
         } catch (Exception e) {
-            System.err.println "Error during scraping: ${e.message}"
-            if (verbose) {
-                e.printStackTrace()
-            }
+            System.err.println "Fatal error: ${e.message}"
+            e.printStackTrace()
         } finally {
             println "\n" + "=" * 60
             println "Scraping session completed at ${CliUtils.getCurrentTimestamp()}"
@@ -95,7 +24,7 @@ class MainScraper {
     }
 
     /**
-     *
+     * Performs a custom web scraping operation using the provided URL and CSS selector.
      */
     static void runCustomScraping(String url, String selector, Integer limit, String outputFile, String format, boolean verbose) {
         if (verbose) println "\nCustom scraping: $selector from $url"
@@ -149,7 +78,7 @@ class MainScraper {
      * Run table scraper
      */
     static void runTableScraper(boolean verbose) {
-        if (verbose) println "\n📊 Scraping table data..."
+        if (verbose) println "\nScraping table data..."
         ScraperUtils.scrapeTableData()
         ScraperUtils.respectfulDelay()
     }
@@ -158,7 +87,7 @@ class MainScraper {
      * Run JSON scraper
      */
     static void runJsonScraper(boolean verbose) {
-        if (verbose) println "\n🔗 Scraping JSON API data..."
+        if (verbose) println "\nScraping JSON API data..."
         ScraperUtils.scrapeJsonData()
         ScraperUtils.respectfulDelay()
     }
@@ -167,7 +96,7 @@ class MainScraper {
      * Run form scraper
      */
     static void runFormScraper(boolean verbose) {
-        if (verbose) println "\n📝 Analyzing form structures..."
+        if (verbose) println "\nAnalyzing form structures..."
         ScraperUtils.scrapeWithFormData()
         ScraperUtils.respectfulDelay()
     }
