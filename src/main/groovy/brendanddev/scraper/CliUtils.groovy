@@ -43,7 +43,9 @@ class CliUtils {
     }
     
     /**
-     * Controls the main flow of the cli based scraper app
+     * Controls the main flow of the cli based scraper application.
+     * It displays the menu to the user with options to choose from, and uses a scanner to read user input and
+     * perform actions based on the selected option.
      */
     static void runScraperMenu() {
         Scanner scanner = new Scanner(System.in)
@@ -66,7 +68,7 @@ class CliUtils {
                     handleCustomScraping(scanner)
                     break
                 case '2':
-                    MainScraper.runAllExamples(true)
+                    ScraperExamples.runAllExamples(true)
                     break
                 case '3':
                     handleHelpMenu()
@@ -83,7 +85,9 @@ class CliUtils {
     }
 
     /**
+     * Handles the custom scraping flow where the user provides a URL and CSS selector.
      *
+     * @param scanner The Scanner instance for reading user input
      */
     static void handleCustomScraping(Scanner scanner) {
         try {
@@ -179,8 +183,7 @@ class CliUtils {
             - p: All paragraphs
 
             You can save scraping results to a file in text, JSON, or CSV format.
-        """
-
+        """.stripIndent()
     }
 
 
