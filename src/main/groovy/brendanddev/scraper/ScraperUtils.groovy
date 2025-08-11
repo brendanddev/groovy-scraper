@@ -191,12 +191,11 @@ class ScraperUtils {
                 if (limit && count >= limit) break
                 
                 String value = attribute ? element.attr(attribute) : element.text()
-                if (value.trim()) {  // Only add non-empty results
+                if (value.trim()) {
                     results.add(value.trim())
                     count++
                 }
             }
-            
             // Add delay after scraping
             respectfulDelay()
             
@@ -205,7 +204,6 @@ class ScraperUtils {
         }
         return results
     }
-
 
     /**
      * Saves the given string content to a file at the specified path.

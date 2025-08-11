@@ -20,11 +20,12 @@ class CliMenu {
         CliBanner.printBanner()
 
         while (true) {
-            println "1) Custom Scraping"
-            println "2) Run Built-in Examples"
-            println "3) Help & Usage"
-            println "4) Exit"
-            print "\nChoose an option (1-4): "
+            println TerminalStyles.BOLD + "Menu Options:" + TerminalStyles.RESET
+            println TerminalStyles.GREEN + "1) Custom Scraping" + TerminalStyles.RESET
+            println TerminalStyles.GREEN + "2) Run Built-in Examples" + TerminalStyles.RESET
+            println TerminalStyles.GREEN + "3) Help & Usage" + TerminalStyles.RESET
+            println TerminalStyles.GREEN + "4) Exit" + TerminalStyles.RESET
+            println TerminalStyles.BOLD + "\nChoose an option (1-4): " + TerminalStyles.RESET
 
             String choice = scanner.nextLine().trim()
 
@@ -43,7 +44,7 @@ class CliMenu {
                     scanner.close()
                     return
                 default:
-                    println "Invalid choice. Please select a valid option."
+                    println TerminalStyles.error("Invalid choice. Please select a valid option.")
                     break
             }
         }
@@ -57,55 +58,48 @@ class CliMenu {
     static void handleCustomScraping(Scanner scanner) {
         try {
             // Get url from user
-            print "\nEnter the website URL to scrape: "
+            println TerminalStyles.info("Enter the website URL to scrape: ")
             String url = scanner.nextLine().trim()
 
             if (!UrlUtils.isValidUrl(url)) {
-                println "Invalid URL format. Please include http:// or https://"
+                println TerminalStyles.error("Invalid URL format. Please include http:// or https://")
                 return
             }
 
             // Check robots.txt
             String baseUrl = UrlUtils.extractBaseUrl(url)
-            println "\nChecking robots.txt for $baseUrl ..."
+            println TerminalStyles.info("Checking robots.txt for $baseUrl ...")
             ScraperUtils.checkRobotsTxt(baseUrl)
 
-            // Get selector from user
-            println "\nCommon selectors:"
-            println "  h1, h2, h3        - Headers"
-            println "  .class-name       - Elements with a class"
-            println "  #element-id       - Element with specific ID"
-            println "  a                 - All links"
-            println "  p                 - All paragraphs"
-
-            print "\nEnter a CSS selector (e.g., h1, .class, #id): "
+            // Get CSS selector from user
+            print TerminalStyles.info("Enter a CSS selector (e.g., h1, .class, #id): ")
             String selector = scanner.nextLine().trim()
 
             if (selector.isEmpty()) {
-                println "No selector provided. Returning to menu."
+                println TerminalStyles.error("No selector provided. Returning to menu.")
                 return
             }
 
             // Prompt for number of results
-            print "\nLimit results (press Enter for no limit): "
+            print TerminalStyles.info("Limit results (press Enter for no limit): ")
             String limitStr = scanner.nextLine().trim()
             Integer limit = limitStr.isEmpty() ? null : limitStr.toInteger()
 
-            println "\nScraping '$selector' from $url ..."
+            println TerminalStyles.info("Scraping '$selector' from $url ...")
             List<String> results = ScraperUtils.scrapeElementsToList(url, selector, limit)
 
             if (results.isEmpty()) {
-                println "No results found for selector '$selector'"
+                println TerminalStyles.error("No results found for selector '$selector'")
             } else {
                 OutputFormatter.displayResults(results)
 
                 // Ask to save results
-                print "\nSave results to file? (y/n): "
+                print TerminalStyles.info("Save results to file? (y/n): ")
                 String saveResponse = scanner.nextLine().trim().toLowerCase()
 
                 // Ask for filename and format
                 if (saveResponse.startsWith('y')) {
-                    print "Enter filename: "
+                    println "Enter filename: "
                     String filename = scanner.nextLine().trim()
 
                     if (!filename.isEmpty()) {
