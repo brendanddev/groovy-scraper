@@ -18,9 +18,16 @@ class MainScraper {
         // Parse the command line arguments into options
         def options = cli.parse(args)
 
-        // If no options provided,
+        // If no options provided or help requested
         if (!options || options.h) {
             cli.usage()
+            ScraperExamples.printUsageExamples()
+            return
+        }
+
+        // Check for examples list
+        if (options.l) {
+            printCssSelectorExamples()
             return
         }
 
@@ -33,6 +40,7 @@ class MainScraper {
         // Initialize logging
         boolean verbose = options.v
         String outputFile = options.o ?: null
+        String format = options.format ?: 'text'
 
         // Print application banner
         CliUtils.printBanner()
@@ -44,25 +52,33 @@ class MainScraper {
         }
 
         try {
+            // Handle custom URL scraping
+            if (options.u) {
+                if (!options.s) {
+                    println "Error: --selector is required when using --url"
+                    return
+                }
+                runCustomScraping(options.u, options.s, options.m?.toInteger(), outputFile, format, verbose)
+                return
+            }
+
             // Determine what to run based on options
-            if (options.r || options.a) {
+            if (options.q) {
+                runQuotesScraper(verbose)
+            } else if (options.r) {
                 runRobotsCheck(verbose)
-            }
-
-            if (options.t || options.a) {
+            } else if (options.t) {
                 runTableScraper(verbose)
-            }
-
-            if (options.j || options.a) {
+            } else if (options.j) {
                 runJsonScraper(verbose)
-            }
-
-            if (options.f || options.a) {
+            } else if (options.f) {
                 runFormScraper(verbose)
+            } else if (options.a || (!options.r && !options.t && !options.j && !options.f && !options.q)) {
+                runAllExamples(verbose)
             }
 
             // Save output if requested
-            if (outputFile) {
+            if (outputFile && !options.u) {
                 String summary = generateSummary()
                 ScraperUtils.saveToFile(summary, outputFile)
             }
@@ -75,9 +91,48 @@ class MainScraper {
         } finally {
             println "\n" + "=" * 60
             println "Scraping session completed at ${CliUtils.getCurrentTimestamp()}"
-            println "Remember: Always scrape responsibly!"
         }
     }
+
+    /**
+     *
+     */
+    static void runCustomScraping(String url, String selector, Integer limit, String outputFile, String format, boolean verbose) {
+        if (verbose) println "\nCustom scraping: $selector from $url"
+        
+        if (!CliUtils.isValidUrl(url)) {
+            println "Error: Invalid URL format"
+            return
+        }
+
+        List<String> results = ScraperUtils.scrapeElementsToList(url, selector, limit)
+        
+        if (results.isEmpty()) {
+            println "No results found for selector '$selector'"
+            return
+        }
+
+        // Display results
+        CliUtils.displayResults(results)
+
+        // Save to file if requested
+        if (outputFile) {
+            CliUtils.saveResults(results, outputFile, format, url, selector)
+        }
+    }
+
+    /**
+     * Runs all built-in examples
+     */
+    static void runAllExamples(boolean verbose) {
+        println "\nRunning all scraping examples..."
+        runRobotsCheck(verbose)
+        runQuotesScraper(verbose)
+        runTableScraper(verbose)
+        runJsonScraper(verbose)
+        runFormScraper(verbose)
+    }
+    
 
     /**
      * Runs the robots.txt checker
