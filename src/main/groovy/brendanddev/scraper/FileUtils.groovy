@@ -32,6 +32,20 @@ class FileUtils {
     }
 
     /**
+     * Saves the given string content to a file at the specified path.
+     *
+     * @param content The text content to write to the file.
+     * @param filePath The path (including filename) where the content should be saved.
+     */
+    static void saveToFile(String content, String filePath) {
+        try {
+            new File(filePath).text = content
+        } catch (IOException e) {
+            println "Error saving content to file: ${e.message}"
+        }
+    }
+
+    /**
      * Writes the given content to a file in the output directory.
      *
      * @param content The content to write to the file

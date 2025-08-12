@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter
  * It provides methods to display results to the console and save results to files in various formats (text, JSON, CSV).
  */
 class OutputFormatter {
-    
+
 
     /** 
      * Displays a list of scraping results in the console
@@ -16,16 +16,25 @@ class OutputFormatter {
      * @param results The list of results to display
      */
     private static void displayResults(List<String> results) {
-        println "\nFound ${results.size()} result(s):"
-        println "-" * 50
+        if (results.isEmpty()) {
+            println TerminalStyles.warn("No results to display")
+            return
+        }
+
+        println "\n" + TerminalStyles.success("Found ${results.size()} result(s):")
+        println TerminalStyles.WHITE + "-" * 50 + TerminalStyles.RESET
+        int maxDisplay = 20
         
         results.eachWithIndex { result, index ->
-            println "${index + 1}: ${result}"
-            if (index >= 9 && results.size() > 10) {
-                println "... and ${results.size() - 10} more results"
-                return
+            if (index < maxDisplay) {
+                String truncatedResult = result.length() > 100 ? result.substring(0, 100) + "..." : result
+                println TerminalStyles.BOLD + "${index + 1}: " + TerminalStyles.RESET + truncatedResult
+            } else {
+                println TerminalStyles.dim("... and ${results.size() - maxDisplay} more results (saved to file if requested)")
+                return false
             }
         }
+        println()
     }
     
     /**
@@ -39,8 +48,8 @@ class OutputFormatter {
      */
     static void saveResults(List<String> results, String filename, String format, String url, String selector) {
         String content = generateOutput(results, format, url, selector)
-        ScraperUtils.saveToFile(content, filename)
-        println "Results saved to ${filename}"
+        FileUtils.saveToFile(content, filename)
+        println TerminalStyles.success("Results saved to ${filename}")
     }
 
     /**

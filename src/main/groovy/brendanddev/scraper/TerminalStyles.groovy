@@ -35,8 +35,8 @@ class TerminalStyles {
     ]
     
     // Common symbols with colors
-    static String success(String msg) { return "${BOLD}${GREEN}[✓]${RESET} ${GREEN}${msg}${RESET}" }
-    static String error(String msg)   { return "${BOLD}${RED}[✖]${RESET} ${RED}${msg}${RESET}" }
+    static String success(String msg) { return "${BOLD}${GREEN}[OK]${RESET} ${GREEN}${msg}${RESET}" }
+    static String error(String msg)   { return "${BOLD}${RED}[X]${RESET} ${RED}${msg}${RESET}" }
     static String info(String msg)    { return "${BOLD}${WHITE}[i]${RESET} ${BOLD}${msg} ${RESET}" }
     static String warn(String msg)    { return "${BOLD}${YELLOW}[!]${RESET} ${YELLOW}${msg}${RESET}" }
     static String dim(String msg)     { return "${DIM}${msg}${RESET}" }

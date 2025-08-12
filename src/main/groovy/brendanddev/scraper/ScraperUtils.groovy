@@ -206,21 +206,6 @@ class ScraperUtils {
     }
 
     /**
-     * Saves the given string content to a file at the specified path.
-     *
-     * @param content The text content to write to the file.
-     * @param filePath The path (including filename) where the content should be saved.
-     */
-    static void saveToFile(String content, String filePath) {
-        try {
-            new File(filePath).text = content
-            println "Content saved to ${filePath}"
-        } catch (IOException e) {
-            println "Error saving content to file: ${e.message}"
-        }
-    }
-
-    /**
      * Fetches the robots.txt file for a given base URL.
      * Prints the content of the robots.txt file if it exists.
      *
