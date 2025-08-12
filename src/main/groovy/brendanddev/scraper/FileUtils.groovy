@@ -31,12 +31,39 @@ class FileUtils {
         }
     }
 
-    
+    /**
+     * Writes the given content to a file in the output directory.
+     *
+     * @param content The content to write to the file
+     * @param fileName The name of the file to create
+     * @return true if the file was written successfully, false otherwise
+     */
+    static boolean writeToFile(String content, String fileName) {
+        try {
+            ensureOutputDirectoryExists()
+            String fullPath = "${OUTPUT_DIR}/${fileName}"
+            new File(fullPath).text = content 
+            return true
+        } catch (IOException e) {
+            println TerminalStyles.error("Failed to write to file: ${fileName}. Error: ${e.message}")
+            return false
+        }
+    }
 
+    /**
+     * Reads the content of a file from the specified path.
+     *
+     * @param filePath The path to the file to read
+     * @return The content of the file as a String, or null if an error occurs
+     */
+    static String readFromFile(String filePath) {
+        try {
+            return new File(filePath).text
+        } catch (IOException e) {
+            println TerminalStyles.error("Failed to read from file: ${filePath}. Error: ${e.message}")
+            return null
+        }
 
+    }
 
-
-
-
-    
 }
