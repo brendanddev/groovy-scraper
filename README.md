@@ -8,7 +8,7 @@ A comprehensive educational project demonstrating ethical web scraping technique
 
 This project provides a set of reusable Groovy utilities for web scraping tasks, including:
 
-- Scraping quotes from a demo website
+- Scraping data from demo websites
 - Fetching and parsing HTML tables
 - Downloading and parsing JSON data from APIs
 - Checking robots.txt for site scraping policies
@@ -31,16 +31,5 @@ It is designed for learning, experimentation, and as a starting point for buildi
 
 - [JSoup](https://jsoup.org/) — for parsing and extracting data from HTML
 - Groovy standard libraries — for scripting and CLI utilities
-
----
-
-
-## Usage
-
-
----
-
-## Getting Started
-
 
 ---
