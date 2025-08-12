@@ -1,21 +1,35 @@
 # Groovy Web Scraper
 
-A comprehensive educational project demonstrating ethical web scraping techniques using Groovy and JSoup.
+A powerful, interactive **terminal-based web scraper application** built with Groovy and JSoup.  
+Designed for real-world scraping tasks as well as learning and experimentation with ethical scraping techniques.
 
 ---
 
 ## Overview
 
-This project provides a set of reusable Groovy utilities for web scraping tasks, including:
+This application offers a **user-friendly command-line interface** to scrape data from websites by specifying URLs and CSS selectors.  
+It combines reusable Groovy utilities with practical features such as:
 
-- Scraping data from demo websites
-- Fetching and parsing HTML tables
-- Downloading and parsing JSON data from APIs
-- Checking robots.txt for site scraping policies
-- Respectful request pacing with delays between requests
-- Saving scraped content to files
+- Interactive terminal menu for custom scraping and pre-built examples  
+- Scraping data from demo and real-world websites  
+- Fetching and parsing HTML tables and JSON APIs  
+- Checking and respecting `robots.txt` policies to ensure ethical scraping  
+- Built-in delays to prevent overwhelming target servers  
+- Saving scraped results in text, JSON, or CSV formats  
+- Clear, color-coded terminal output for easy reading  
 
-It is designed for learning, experimentation, and as a starting point for building custom scrapers.
+Whether you’re a developer wanting to quickly extract data or someone learning how to build scrapers responsibly, this app is ready to use out-of-the-box.
+
+---
+
+## Features
+
+- **Custom Scraping:** Input any URL and CSS selector to scrape live data  
+- **Built-in Examples:** Demonstrations of table scraping, JSON API parsing, and robots.txt compliance  
+- **Robots.txt Checker:** Verifies site scraping permissions and informs you if scraping is disallowed or robots.txt is missing  
+- **Result Saving:** Export scraped data easily to text, JSON, or CSV files  
+- **Respectful Scraping:** Implements pacing between requests to avoid hitting servers too hard  
+- **Terminal UI:** Intuitive prompts and colorful messages guide you through scraping tasks  
 
 ---
 
