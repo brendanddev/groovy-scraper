@@ -23,8 +23,8 @@ class ScraperExamples {
      * @param verbose Whether to print detailed output
      */
     static void runRobotsCheck() {
-        println TerminalStyles.info("\nChecking robots.txt compliance...")
-        ScraperUtils.checkRobotsTxt("https://www.wikipedia.org")
+        print TerminalStyles.info("\nChecking robots.txt compliance...")
+        ScraperUtils.checkRobotsTxt("http://quotes.toscrape.com/")
         ScraperUtils.respectfulDelay()
     }
 
@@ -32,7 +32,7 @@ class ScraperExamples {
      * Run table scraper
      */
     static void runTableScraper() {
-        println TerminalStyles.info("\nScraping table data...")
+        print TerminalStyles.info("\nScraping table data...")
         ScraperUtils.scrapeTableData()
         ScraperUtils.respectfulDelay()
     }
@@ -41,7 +41,7 @@ class ScraperExamples {
      * Run JSON scraper
      */
     static void runJsonScraper() {
-        println TerminalStyles.info("\nScraping JSON API data...")
+        print TerminalStyles.info("\nScraping JSON API data...")
         ScraperUtils.scrapeJsonData()
         ScraperUtils.respectfulDelay()
     }
@@ -50,7 +50,7 @@ class ScraperExamples {
      * Run form scraper
      */
     static void runFormScraper() {
-        println TerminalStyles.info("\nAnalyzing form structures...")
+        print TerminalStyles.info("\nAnalyzing form structures...")
         ScraperUtils.scrapeWithFormData()
         ScraperUtils.respectfulDelay()
     }

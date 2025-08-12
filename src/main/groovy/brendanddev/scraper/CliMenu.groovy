@@ -34,7 +34,7 @@ class CliMenu {
                     handleCustomScraping(scanner)
                     break
                 case '2':
-                    ScraperExamples.runAllExamples(true)
+                    ScraperExamples.runAllExamples()
                     break
                 case '3':
                     handleHelpMenu()
