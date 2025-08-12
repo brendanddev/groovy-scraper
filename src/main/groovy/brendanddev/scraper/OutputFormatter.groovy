@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter
  * It provides methods to display results to the console and save results to files in various formats (text, JSON, CSV).
  */
 class OutputFormatter {
+    
 
     /** 
      * Displays a list of scraping results in the console
